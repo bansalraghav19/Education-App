@@ -6,6 +6,8 @@ import {
   ImageBackground,
   TextInput,
   StyleSheet,
+  Picker, 
+  ScrollView
 } from 'react-native';
 
 import {useTheme} from 'react-native-paper';
@@ -21,14 +23,25 @@ const EditProfileScreen = () => {
 
   const [image, setImage] = useState('https://api.adorable.io/avatars/80/abott@adorable.png');
   const {colors} = useTheme();
+  const [FormData, setFormData] = useState({
+    FullName: 'Raghav Bansal',
+    State: 'Punjab',
+    City: 'Barnala',
+    Board: 'CBSE',
+    Class: 6,
+    Gender: 'male',
+    email: 'raghavrocking1@gmail.com'
+  }) 
+  const [Name,SetName] = useState(FormData.FullName)
 
   return (
-    <View style={styles.container}>
+    <ScrollView>
+      <View style={styles.container}>
       <BottomSheet
         snapPoints={[330, 0]}
         enabledGestureInteraction={true}
       />
-        <View style={{alignItems: 'center'}}>
+        <View style={{alignItems: 'center', marginBottom: 20}}>
           <TouchableOpacity>
             <View
               style={{
@@ -68,7 +81,7 @@ const EditProfileScreen = () => {
             </View>
           </TouchableOpacity>
           <Text style={{marginTop: 10, fontSize: 18, fontWeight: 'bold'}}>
-            John Doe
+            {Name}
           </Text>
         </View>
         <View style={styles.action}>
@@ -81,23 +94,11 @@ const EditProfileScreen = () => {
               styles.textInput,
               {
                 color: colors.text,
+                marginTop: 0.1
               },
             ]}
-          />
-        </View>
-        <View style={styles.action}>
-          <Feather name="phone" color={colors.text} size={20} />
-          <TextInput
-            placeholder="Phone"
-            placeholderTextColor="#666666"
-            keyboardType="number-pad"
-            autoCorrect={false}
-            style={[
-              styles.textInput,
-              {
-                color: colors.text,
-              },
-            ]}
+            value={FormData.FullName}
+            onChangeText={(e) => setFormData({...FormData, FullName: e})}
           />
         </View>
         <View style={styles.action}>
@@ -111,42 +112,62 @@ const EditProfileScreen = () => {
               styles.textInput,
               {
                 color: colors.text,
+                marginTop: 0.1
               },
             ]}
+            value={FormData.email}
+            onChangeText={(e) => setFormData({...FormData, email: e})}
           />
         </View>
         <View style={styles.action}>
-          <FontAwesome name="globe" color={colors.text} size={20} />
-          <TextInput
-            placeholder="Country"
-            placeholderTextColor="#666666"
-            autoCorrect={false}
-            style={[
-              styles.textInput,
-              {
-                color: colors.text,
-              },
-            ]}
-          />
+          <FontAwesome style={{marginTop: 15}} name="globe" color={colors.text} size={20} />
+          <Picker
+            value
+            style={{ width: '100%' }}
+            onValueChange={(itemValue, itemIndex) => setSelectedValue(itemValue)}
+          >
+            <Picker.Item label="Java" value="java" />
+            <Picker.Item label="JavaScript" value="js" />
+          </Picker>
         </View>
         <View style={styles.action}>
-          <Icon name="map-marker-outline" color={colors.text} size={20} />
-          <TextInput
-            placeholder="City"
-            placeholderTextColor="#666666"
-            autoCorrect={false}
-            style={[
-              styles.textInput,
-              {
-                color: colors.text,
-              },
-            ]}
-          />
+          <Icon style={{marginTop: 15}} name="map-marker-outline" color={colors.text} size={20} />
+          <Picker
+            value={FormData.State}
+            style={{ width: '100%' }}
+            // onValueChange={(itemValue, itemIndex) => setSelectedValue(itemValue)}
+          >
+            <Picker.Item label="Java" value="java" />
+            <Picker.Item label="JavaScript" value="js" />
+          </Picker>
         </View>
-        <TouchableOpacity style={styles.commandButton} onPress={() => {}}>
+        <View style={styles.action}>
+          <Icon style={{marginTop: 15}} name="map-marker-outline" color={colors.text} size={20} />
+          <Picker
+            // selectedValue="java"
+            style={{ width: '100%' }}
+            // onValueChange={(itemValue, itemIndex) => setSelectedValue(itemValue)}
+          >
+            <Picker.Item label="Java" value="java" />
+            <Picker.Item label="JavaScript" value="js" />
+          </Picker>
+        </View>
+        <View style={styles.action}>
+          <Icon style={{marginTop: 15}} name="map-marker-outline" color={colors.text} size={20} />
+          <Picker
+            // selectedValue="java"
+            style={{ width: '100%' }}
+            // onValueChange={(itemValue, itemIndex) => setSelectedValue(itemValue)}
+          >
+            <Picker.Item label="Java" value="java" />
+            <Picker.Item label="JavaScript" value="js" />
+          </Picker>
+        </View>
+        <TouchableOpacity style={styles.commandButton}>
           <Text style={styles.panelButtonTitle}>Submit</Text>
         </TouchableOpacity>
     </View>
+    </ScrollView>
   );
 };
 
@@ -220,11 +241,13 @@ const styles = StyleSheet.create({
   },
   action: {
     flexDirection: 'row',
-    marginTop: 20,
-    marginBottom: 20,
     borderBottomWidth: 1,
     borderBottomColor: '#f2f2f2',
     paddingBottom: 5,
+    alignContent: 'center', 
+    justifyContent: 'flex-start', 
+    marginBottom: 15, 
+    marginTop: 10
   },
   actionError: {
     flexDirection: 'row',

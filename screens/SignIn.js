@@ -115,6 +115,7 @@ const SignIn = ({navigation}) => {
             })
         }).then((response) => {
             response.json().then((data)=> {
+                console.log(data)
                 token = data.token 
                 if(data.token==null) {
                     Alert.alert('Invalid User!', 'Username or password is incorrect.', [

@@ -35,7 +35,7 @@ export function DrawerContent(props) {
                             />
                             <View style={{marginLeft: 15}}>
                                 <Title style={styles.title}>Raghav Bansal</Title>
-                                <Caption style={styles.caption}>bansalraghav19</Caption>
+                                <Caption style={styles.caption}>+919478121646</Caption>
                             </View>
                         </View> 
                     </View>
