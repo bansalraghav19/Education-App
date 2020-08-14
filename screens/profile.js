@@ -1,4 +1,5 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
+import { useIsFocused } from '@react-navigation/native';
 import {
   View,
   Text,
@@ -7,8 +8,11 @@ import {
   TextInput,
   StyleSheet,
   Picker, 
-  ScrollView
+  ScrollView,
+  AsyncStorage
 } from 'react-native';
+
+import * as ImagePicker from 'expo-image-picker';
 
 import {useTheme} from 'react-native-paper';
 
@@ -23,16 +27,84 @@ const EditProfileScreen = () => {
 
   const [image, setImage] = useState('https://api.adorable.io/avatars/80/abott@adorable.png');
   const {colors} = useTheme();
-  const [FormData, setFormData] = useState({
-    FullName: 'Raghav Bansal',
-    State: 'Punjab',
-    City: 'Barnala',
-    Board: 'CBSE',
-    Class: 6,
-    Gender: 'male',
-    email: 'raghavrocking1@gmail.com'
-  }) 
-  const [Name,SetName] = useState(FormData.FullName)
+  const [formData, setformData] = useState({}) 
+  const [Name,SetName] = useState(formData.FullName)
+  const isFocused = useIsFocused()
+  const boards =  ['HP Board', 'CBSE']
+  const classes = ['6', '7', '8', '9', '10']
+  const [states,setStates] = useState([])
+
+  useEffect(() => {
+    const GetUser = async () => {
+      var myHeaders = new Headers();
+      const Token = await AsyncStorage.getItem('Token');
+      myHeaders.append("authorization", "Bearer "+Token);
+      fetch('https://education4all.herokuapp.com/showUser', {
+        method: 'GET',
+        headers: myHeaders,
+        redirect: 'follow'
+      }).then((response) => {
+        response.json().then((res) => {
+          console.log(res.user)
+          setformData(res.user)
+          setImage("https://education4all.herokuapp.com/uploads/"+res.user.profilePic)
+        })
+      })
+    }
+    GetUser()
+    fetch('https://raw.githubusercontent.com/bhanuc/indian-list/master/state-city.json').
+      then((response) => {
+        response.json().then((data) => {
+          let v = []
+          Object.keys(data).map((key) => {
+            v.push(key)
+          })
+          setStates(v)
+        })
+      })
+  }, [isFocused])
+
+  const UpdateForm = async () => {
+
+  }
+
+  let openImagePickerAsync = async () => {
+    let permissionResult = await ImagePicker.requestCameraRollPermissionsAsync();
+
+    if (permissionResult.granted === false) {
+      alert("Permission to access camera roll is required!");
+      return;
+    }
+
+    let pickerResult = await ImagePicker.launchImageLibraryAsync();
+    if(pickerResult.uri) {
+      const Token = await AsyncStorage.getItem('Token')
+        
+      let localUri = pickerResult.uri;
+      let filename = localUri.split('/').pop();
+    
+      let formData = new FormData();
+
+      formData.append('sampleFile', { "uri": pickerResult.uri, "name": filename, type: 'image/jpg'});
+      
+      console.log(formData)
+
+      fetch('https://education4all.herokuapp.com/uploadDP', {
+        method: 'POST',
+        headers: {
+          "authorization": "Bearer " + Token,
+          "content-type": 'multipart/form-data',
+        },
+        body: formData,
+      }).then((res) => {
+        (res).json().then((data) => {
+          setImage(pickerResult.uri)
+        }) 
+      }).catch((e) => {
+        console.log(e)
+      });
+    } 
+  }
 
   return (
     <ScrollView>
@@ -42,7 +114,9 @@ const EditProfileScreen = () => {
         enabledGestureInteraction={true}
       />
         <View style={{alignItems: 'center', marginBottom: 20}}>
-          <TouchableOpacity>
+          <TouchableOpacity
+            onPress={openImagePickerAsync}
+          >
             <View
               style={{
                 height: 100,
@@ -63,25 +137,12 @@ const EditProfileScreen = () => {
                     justifyContent: 'center',
                     alignItems: 'center',
                   }}>
-                  <Icon
-                    name="camera"
-                    size={35}
-                    color="#fff"
-                    style={{
-                      opacity: 0.7,
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      borderWidth: 1,
-                      borderColor: '#fff',
-                      borderRadius: 10,
-                    }}
-                  />
                 </View>
               </ImageBackground>
             </View>
           </TouchableOpacity>
           <Text style={{marginTop: 10, fontSize: 18, fontWeight: 'bold'}}>
-            {Name}
+            {formData.userName}
           </Text>
         </View>
         <View style={styles.action}>
@@ -97,8 +158,8 @@ const EditProfileScreen = () => {
                 marginTop: 0.1
               },
             ]}
-            value={FormData.FullName}
-            onChangeText={(e) => setFormData({...FormData, FullName: e})}
+            value={formData.userName}
+            onChangeText={(e) => setformData({...formData, FullName: e})}
           />
         </View>
         <View style={styles.action}>
@@ -115,25 +176,27 @@ const EditProfileScreen = () => {
                 marginTop: 0.1
               },
             ]}
-            value={FormData.email}
-            onChangeText={(e) => setFormData({...FormData, email: e})}
+            value={formData.userName}
+            onChangeText={(e) => setformData({...formData, email: e})}
           />
         </View>
         <View style={styles.action}>
           <FontAwesome style={{marginTop: 15}} name="globe" color={colors.text} size={20} />
           <Picker
-            value
+            selectedValue="Punjab"
             style={{ width: '100%' }}
-            onValueChange={(itemValue, itemIndex) => setSelectedValue(itemValue)}
           >
-            <Picker.Item label="Java" value="java" />
-            <Picker.Item label="JavaScript" value="js" />
+            {
+              states.map((value) => {
+                return <Picker.Item label={value} value={value}/>
+              })
+            }
           </Picker>
         </View>
         <View style={styles.action}>
           <Icon style={{marginTop: 15}} name="map-marker-outline" color={colors.text} size={20} />
           <Picker
-            value={FormData.State}
+            value={formData.State}
             style={{ width: '100%' }}
             // onValueChange={(itemValue, itemIndex) => setSelectedValue(itemValue)}
           >
@@ -146,10 +209,12 @@ const EditProfileScreen = () => {
           <Picker
             // selectedValue="java"
             style={{ width: '100%' }}
-            // onValueChange={(itemValue, itemIndex) => setSelectedValue(itemValue)}
           >
-            <Picker.Item label="Java" value="java" />
-            <Picker.Item label="JavaScript" value="js" />
+            {
+              boards.map((data) => {
+                return <Picker.Item value={data} label={data}/>
+              })
+            }
           </Picker>
         </View>
         <View style={styles.action}>
@@ -159,8 +224,11 @@ const EditProfileScreen = () => {
             style={{ width: '100%' }}
             // onValueChange={(itemValue, itemIndex) => setSelectedValue(itemValue)}
           >
-            <Picker.Item label="Java" value="java" />
-            <Picker.Item label="JavaScript" value="js" />
+            {
+              classes.map((data) => {
+                return <Picker.Item value={data} label={data}/>
+              })
+            }
           </Picker>
         </View>
         <TouchableOpacity style={styles.commandButton}>

@@ -71,6 +71,7 @@ function DrawNavigator(props) {
   }), [])
 
   useEffect(() => {
+    console.log('Hello')
     setTimeout(async () => {
       let userToken = null 
       userToken = await AsyncStorage.getItem('Token');
