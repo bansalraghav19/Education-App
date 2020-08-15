@@ -66,24 +66,29 @@ export function DrawerContent(props) {
                         <DrawerItem 
                             icon={({color, size}) => (
                                 <Icon 
-                                name="settings-outline" 
-                                color={color}
-                                size={size}
-                                />
-                            )}
-                            label="Settings"
-                            onPress={() => {props.navigation.navigate('Settings')}}
-                        />
-                        <DrawerItem 
-                            icon={({color, size}) => (
-                                <Icon 
                                 name="account-check-outline" 
                                 color={color}
                                 size={size}
                                 />
                             )}
                             label="Support"
-                            onPress={() => {props.navigation.navigate('SupportScreen')}}
+                            onPress={() => {props.navigation.navigate('Support')}}
+                        />
+                        <DrawerItem 
+                            icon={({color, size}) => (
+                                <Icon 
+                                name="settings-outline" 
+                                color= 'white'
+                                size={size}
+                                />
+                            )}
+                            style={{
+                                backgroundColor: '#FF6347', 
+                                color: '#ffffff'
+                            }}
+                            label="Buy Prenium"
+                            labelStyle={{color: 'white'}}
+                            onPress={() => {props.navigation.navigate('Settings')}}
                         />
                     </Drawer.Section>
             </DrawerContentScrollView>

@@ -10,6 +10,7 @@ import { StyleSheet } from 'react-native';
 import { AuthContext } from '../Redux/redux';
 import Profile from '../routes/MyProfileStack';
 import Settings from '../routes/SettingsStack';
+import Support from '../routes/CustomerStack';
 
 const Drawer = createDrawerNavigator();
 
@@ -97,6 +98,7 @@ function DrawNavigator(props) {
               <Drawer.Navigator initialRouteName="Home"  drawerContent={props => <DrawerContent {...props} />}>
                 <Drawer.Screen name="Home" component={TabNavigator} />
                 <Drawer.Screen name="Profile" component={Profile}/>
+                <Drawer.Screen name="Support" component={Support} />
                 <Drawer.Screen name="Settings" component={Settings} />
               </Drawer.Navigator>
              ) 

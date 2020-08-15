@@ -38,7 +38,7 @@ export default function TabNavigator() {
       />
       <Tab.Screen
         name="Profile"
-        component={ProfileNavigator}
+        component={AboutNavigator}
         options={{
           tabBarLabel: 'Profile',
           tabBarColor: '#fff',

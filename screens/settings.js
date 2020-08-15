@@ -1,10 +1,19 @@
 import React from 'react'; 
-import { View, Text, StyleSheet } from 'react-native'; 
+import { 
+    View, 
+    Text, 
+    StyleSheet, 
+    TouchableOpacity } 
+from 'react-native'; 
 
 function Settings(){
     return (
       <View style={styles.container}>
-          <Text>Settings Screen</Text>
+          <View>
+              <TouchableOpacity style={styles.commandButton}>
+                  <Text style={styles.panelButtonTitle}>Prenium</Text>
+              </TouchableOpacity>
+          </View>
       </View>
     );
 }
@@ -15,6 +24,18 @@ const styles = StyleSheet.create({
         display: 'flex', 
         justifyContent: 'center', 
         alignItems: 'center'
+    }, 
+    commandButton: {
+        padding: 15,
+        borderRadius: 10,
+        backgroundColor: '#FF6347',
+        alignItems: 'center',
+        marginTop: 10,
+    }, 
+    panelButtonTitle: {
+        fontSize: 17,
+        fontWeight: 'bold',
+        color: 'white',
     }
 });
 
