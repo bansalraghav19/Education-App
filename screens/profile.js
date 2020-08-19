@@ -187,8 +187,8 @@ const EditProfileScreen = () => {
             style={{ width: '100%' }}
           >
             {
-              states.map((value) => {
-                return <Picker.Item label={value} value={value}/>
+              states.map((value, itemIndex) => {
+                return <Picker.Item label={value} id={itemIndex} value={value}/>
               })
             }
           </Picker>
@@ -211,8 +211,8 @@ const EditProfileScreen = () => {
             style={{ width: '100%' }}
           >
             {
-              boards.map((data) => {
-                return <Picker.Item value={data} label={data}/>
+              boards.map((data, itemIndex) => {
+                return <Picker.Item value={data} id={itemIndex} label={data}/>
               })
             }
           </Picker>
@@ -225,8 +225,8 @@ const EditProfileScreen = () => {
             // onValueChange={(itemValue, itemIndex) => setSelectedValue(itemValue)}
           >
             {
-              classes.map((data) => {
-                return <Picker.Item value={data} label={data}/>
+              classes.map((data, itemIndex) => {
+                return <Picker.Item value={data} id={itemIndex} label={data}/>
               })
             }
           </Picker>

@@ -1,5 +1,5 @@
-import React, { useContext } from 'react'
-import { View, StyleSheet } from 'react-native'
+import React, { useContext, useEffect, useState } from 'react'
+import { View, StyleSheet, AsyncStorage } from 'react-native'
 import {
     DrawerContentScrollView,
     DrawerItem
@@ -21,6 +21,28 @@ import { AuthContext } from '../Redux/redux';
 
 export function DrawerContent(props) {
     const { Logout } = useContext(AuthContext);
+    const [image, setImage] = useState('https://api.adorable.io/avatars/80/abott@adorable.png');
+    const [formData, setformData] = useState({}) 
+
+    useEffect(() => {
+        const GetUser = async () => {
+            var myHeaders = new Headers();
+            const Token = await AsyncStorage.getItem('Token');
+            myHeaders.append("authorization", "Bearer "+Token);
+            fetch('https://education4all.herokuapp.com/showUser', {
+              method: 'GET',
+              headers: myHeaders,
+              redirect: 'follow'
+            }).then((response) => {
+              response.json().then((res) => {
+                console.log(res.user)
+                setformData(res.user)
+                setImage("https://education4all.herokuapp.com/uploads/"+res.user.profilePic)
+              })
+            })
+        }
+        GetUser()
+    }, [])
     return (
         <View style={{flex: 1}}>
             <DrawerContentScrollView {...props}>
@@ -29,13 +51,13 @@ export function DrawerContent(props) {
                         <View style={{flexDirection: 'row', marginTop: 15}}>
                             <Avatar.Image 
                                 source = {{
-                                    uri: 'https://i.pinimg.com/236x/57/53/74/575374bf227f9845685a2950dd976f88--cartoon-characters-remember-this.jpg'
+                                    uri: image
                                 }}
                                 size = {50}
                             />
                             <View style={{marginLeft: 15}}>
-                                <Title style={styles.title}>Raghav Bansal</Title>
-                                <Caption style={styles.caption}>+919478121646</Caption>
+                                <Title style={styles.title}>{formData.userName}</Title>
+                                <Caption style={styles.caption}>{formData.phone}</Caption>
                             </View>
                         </View> 
                     </View>

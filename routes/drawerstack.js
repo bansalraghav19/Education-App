@@ -72,7 +72,6 @@ function DrawNavigator(props) {
   }), [])
 
   useEffect(() => {
-    console.log('Hello')
     setTimeout(async () => {
       let userToken = null 
       userToken = await AsyncStorage.getItem('Token');
@@ -95,7 +94,7 @@ function DrawNavigator(props) {
             loginState.userToken === null ? (
               <MainStack />
             ) : (
-              <Drawer.Navigator initialRouteName="Home"  drawerContent={props => <DrawerContent {...props} />}>
+              <Drawer.Navigator initialRouteName="Home"  drawerContent={props => <DrawerContent {...props}/>}>
                 <Drawer.Screen name="Home" component={TabNavigator} />
                 <Drawer.Screen name="Profile" component={Profile}/>
                 <Drawer.Screen name="Support" component={Support} />
