@@ -23,6 +23,11 @@
     ],
     "ios": {
       "supportsTablet": true
-    }
+    },
+    "android": {
+      "package": "com.raghav.CheetaApp",
+      "versionCode": 1
+    },
+    "description": ""
   }
 }

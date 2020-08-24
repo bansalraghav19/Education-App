@@ -6,7 +6,7 @@ import Icon from 'react-native-vector-icons/Ionicons'
 export function Header(props) { 
     return (
         <View style={styles.container}>
-            <StatusBar barStyle="light-content"/>
+            <StatusBar backgroundColor='#ffffff' barStyle="dark-content"/>
             <View style={styles.btn_back}>
                 {
                     !props.seprate ? (
