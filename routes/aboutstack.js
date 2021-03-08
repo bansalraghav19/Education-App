@@ -1,6 +1,6 @@
 import React from 'react'
 import { createStackNavigator } from '@react-navigation/stack'
-import About from '../screens/about'
+import Video from '../screens/video'
 import {Header} from '../components/header'
 import Home from '../screens/home';
 import Profile from '../screens/profile';
@@ -9,7 +9,7 @@ const Stack = createStackNavigator()
 
 export default function ProfileNavigator({navigation}) {
   return (
-      <Stack.Navigator initialRouteName='About' screenOptions={{
+      <Stack.Navigator initialRouteName='Video' screenOptions={{
           headerTintColor: '#fff', 
           headerStyle: {
               backgroundColor: '#fff', 
@@ -21,7 +21,7 @@ export default function ProfileNavigator({navigation}) {
         <Stack.Screen name='Home' component={Home} options={{ 
           headerTitle: () => <Header navigation={navigation} color='1f65ff' />
         }}/>
-        <Stack.Screen name='About' component={About} options={{ 
+        <Stack.Screen name='Video' component={Video} options={{ 
           headerTitle: () => <Header navigation={navigation} color='1f65ff' />
         }}/>
         <Stack.Screen name='Profile' component={Profile} options={{ 
