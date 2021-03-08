@@ -110,8 +110,8 @@ const SignIn = ({navigation}) => {
                 'Content-Type': 'application/json'
             },
             "body": JSON.stringify({
-                'phone': '+91'+data.username,
-                'password': data.password
+                'phone': '+918076713871',
+                'password': '12345678'
             })
         }).then((response) => {
             response.json().then((data)=> {
