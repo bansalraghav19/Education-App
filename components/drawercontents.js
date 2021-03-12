@@ -72,7 +72,7 @@ export function DrawerContent(props) {
                                 />
                             )}
                             label="My Courses"
-                            onPress={() => {props.navigation.navigate('Home')}}
+                            onPress={() => {props.navigation.navigate('Courses')}}
                         />
                         <DrawerItem 
                             icon={({color, size}) => (
