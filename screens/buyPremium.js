@@ -9,7 +9,7 @@ from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
 import * as Animatable from 'react-native-animatable';
 
-function Settings(){
+function BuyPremium(){
     return (
             <Animatable.View 
                 animation="swing"
@@ -114,4 +114,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default Settings;
+export default BuyPremium;

@@ -21,9 +21,9 @@ export default function ProfileNavigator({navigation}) {
         <Stack.Screen name='Home' component={Home} options={{ 
           headerTitle: () => <Header navigation={navigation} color='1f65ff' />
         }}/>
-        <Stack.Screen name='Video' component={Video} options={{ 
+        {/* <Stack.Screen name='Video' component={Video} options={{ 
           headerTitle: () => <Header navigation={navigation} color='1f65ff' />
-        }}/>
+        }}/> */}
         <Stack.Screen name='Profile' component={Profile} options={{ 
           headerTitle: () => <Header navigation={navigation} color='1f65ff' />
         }}/>

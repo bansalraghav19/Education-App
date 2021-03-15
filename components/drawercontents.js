@@ -110,7 +110,7 @@ export function DrawerContent(props) {
                             }}
                             label="Buy Prenium"
                             labelStyle={{color: 'white'}}
-                            onPress={() => {props.navigation.navigate('Settings')}}
+                            onPress={() => {props.navigation.navigate('Premium')}}
                         />
                     </Drawer.Section>
             </DrawerContentScrollView>
