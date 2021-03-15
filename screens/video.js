@@ -92,7 +92,7 @@ function VideoCard({ title, img, onPress, style }) {
   );
 }
 
-export default function App() {
+export default function App({navigation}) {
   const video = React.useRef(null);
   const [status, setStatus] = React.useState({});
   const [index, setIndex] = useState(0);
@@ -128,6 +128,32 @@ export default function App() {
       />
     );
   };
+
+
+  // React.useEffect(() => {
+  //   const unsubscribe = navigation.addListener('focus', () => {
+  //     console.log('Focus');
+  //     //Every time the screen is focused the Video starts playing
+  //     if (video.current) {
+  //       video.current.playAsync();
+  //     }
+  //   });
+  //   console.log('ml,  ')
+  //   return unsubscribe;
+  // }, [navigation]);
+
+  //Blur Event: to be fired when the HomeScreen loses focus.
+  React.useEffect(() => {
+    const unsubscribe = navigation.addListener('blur', () => {
+      console.log('Blur');
+      //Every time the screen loses focus the Video.current is paused
+      if (video.current) {
+        video.current.pauseAsync();
+      }
+    });
+
+    return unsubscribe;
+  }, [navigation]);
 
   return (
     <SafeAreaView style={styles.container}>

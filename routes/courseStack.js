@@ -8,17 +8,16 @@ import { Header } from "../components/header";
 
 const Stack = createStackNavigator();
 
-const CourseNavigator = (props) => {
+const CourseNavigator = ({ navigation }) => {
   return (
-    <Stack.Navigator
-      initialRouteName="Chapters"
-      // screenOptions={{
-      //   headerTitle: () => {
-      //     return <Header />;
-      //   },
-      // }}
-    >
-      <Stack.Screen name="Chapters" component={Chapters} />
+    <Stack.Navigator initialRouteName="Chapters">
+      <Stack.Screen
+        name="Chapters"
+        component={Chapters}
+        options={{
+          headerTitle: () => <Header navigation={navigation} />,
+        }}
+      />
       <Stack.Screen name="Video" component={Video} />
     </Stack.Navigator>
   );

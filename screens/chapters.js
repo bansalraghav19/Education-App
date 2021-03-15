@@ -18,7 +18,7 @@ const MyComponent = ({navigation}) => {
         >
           <List.Item
             title="First item"
-            onPress={() => navigation.navigate("Video")}
+            onPress={() => navigation.push("Video")}
           />
           <List.Item title="Second item" />
         </List.Accordion>

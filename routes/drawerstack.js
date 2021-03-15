@@ -9,7 +9,7 @@ import { ActivityIndicator, Colors } from "react-native-paper";
 import { StyleSheet } from "react-native";
 import { AuthContext } from "../Redux/redux";
 import Profile from "../routes/MyProfileStack";
-import Settings from "../routes/SettingsStack";
+import Premium from "../routes/PremiumStack";
 import Courses from "../routes/courseStack";
 import Support from "../routes/CustomerStack";
 import Video from '../screens/video'
@@ -108,9 +108,9 @@ function DrawNavigator(props) {
             <Drawer.Screen name="Home" component={TabNavigator} />
             <Drawer.Screen name="Profile" component={Profile} />
             <Drawer.Screen name="Support" component={Support} />
-            <Drawer.Screen name="Settings" component={Settings} />
+            <Drawer.Screen name="Premium" component={Premium} />
             <Drawer.Screen name="Courses" component={Courses} />
-            <Drawer.Screen name="Video" component={Video} />
+            {/* <Drawer.Screen name="Video" component={Video} /> */}
           </Drawer.Navigator>
         )}
       </NavigationContainer>
