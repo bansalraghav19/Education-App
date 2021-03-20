@@ -10,10 +10,10 @@ import {
   Image,
   TouchableOpacity,
   SafeAreaView,
-  StatusBar,
 } from "react-native";
 import { Video, AVPlaybackStatus } from "expo-av";
 
+import Modal from "../components/modal";
 const playlist = [
   {
     videoUrl: "http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4",
@@ -92,21 +92,11 @@ function VideoCard({ title, img, onPress, style }) {
   );
 }
 
-export default function App({navigation}) {
+export default function App({ navigation, id }) {
   const video = React.useRef(null);
   const [status, setStatus] = React.useState({});
   const [index, setIndex] = useState(0);
   const [selectedId, setSelectedId] = useState("0");
-
-  // React.useEffect(() => {
-  //   if (status.didJustFinish) setIndex((index + 1) % 2);
-  // }, [status.didJustFinish]);
-
-  // let playlist = [
-  //   "https://ia800501.us.archive.org/11/items/popeye_i_dont_scare/popeye_i_dont_scare_512kb.mp4",
-
-  //   "http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4",
-  // ];
 
   const renderVideoCard = ({ item }) => {
     const backgroundColor = item.id === selectedId ? "#6e3b6e" : "white";
@@ -129,23 +119,10 @@ export default function App({navigation}) {
     );
   };
 
-
-  // React.useEffect(() => {
-  //   const unsubscribe = navigation.addListener('focus', () => {
-  //     console.log('Focus');
-  //     //Every time the screen is focused the Video starts playing
-  //     if (video.current) {
-  //       video.current.playAsync();
-  //     }
-  //   });
-  //   console.log('ml,  ')
-  //   return unsubscribe;
-  // }, [navigation]);
-
   //Blur Event: to be fired when the HomeScreen loses focus.
   React.useEffect(() => {
-    const unsubscribe = navigation.addListener('blur', () => {
-      console.log('Blur');
+    const unsubscribe = navigation.addListener("blur", () => {
+      console.log("Blur");
       //Every time the screen loses focus the Video.current is paused
       if (video.current) {
         video.current.pauseAsync();
@@ -157,18 +134,12 @@ export default function App({navigation}) {
 
   return (
     <SafeAreaView style={styles.container}>
-      <View style={{ flex: 0.35 }}>
+      <View style={styles.videoContainer}>
         <ActivityIndicator
           color="grey"
           animating={status?.isBuffering == true && status?.isPlaying == false}
           size="large"
-          style={{
-            position: "absolute",
-            top: "20%",
-            zIndex: 100,
-            left: "45%",
-            opacity: 0.5,
-          }}
+          style={styles.activityIndicator}
         />
         <Video
           // rate={4}
@@ -183,9 +154,11 @@ export default function App({navigation}) {
           onPlaybackStatusUpdate={(status) => setStatus(() => status)}
           // style={[{opacity:0.7}]}
         />
+        <Modal />
       </View>
 
-      <View style={{ flex: 0.65 }}>
+      <View style={styles.listContainer}>
+        <Text>dcd {i}</Text>
         <FlatList
           data={playlist}
           renderItem={renderVideoCard}
@@ -199,14 +172,26 @@ export default function App({navigation}) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    // marginTop: StatusBar.currentHeight || 0,
-    // justifyContent: "center",
     backgroundColor: "#ecf0f1",
+  },
+  videoContainer: {
+    flex: 0.41,
+    marginTop: 5,
+  },
+  activityIndicator: {
+    position: "absolute",
+    top: "35%",
+    zIndex: 100,
+    left: "45%",
+    opacity: 0.5,
   },
   video: {
     alignSelf: "center",
     width: 320,
     height: 200,
+  },
+  listContainer: {
+    flex: 0.59,
   },
   buttons: {
     flexDirection: "row",

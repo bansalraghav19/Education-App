@@ -1,7 +1,7 @@
 import * as React from "react";
 import { List } from "react-native-paper";
 
-const MyComponent = ({navigation}) => {
+const MyComponent = ({ navigation }) => {
   const [expanded, setExpanded] = React.useState(0);
 
   const handlePress = (id) => setExpanded(id);
@@ -9,16 +9,17 @@ const MyComponent = ({navigation}) => {
 
   return (
     <List.Section title="Accordions">
-      {listData.map((data) => (
+      {listData.map((data, i) => (
         <List.Accordion
           title="Controlled Accordion"
           left={(props) => <List.Icon {...props} icon="star" />}
           expanded={expanded == data?.id}
           onPress={() => handlePress(data?.id)}
+          key={i + "list"}
         >
           <List.Item
             title="First item"
-            onPress={() => navigation.push("Video")}
+            onPress={() => navigation.push("Video",{id:data?.id})}
           />
           <List.Item title="Second item" />
         </List.Accordion>
