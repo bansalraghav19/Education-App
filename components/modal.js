@@ -2,6 +2,7 @@ import React, { useRef } from "react";
 import { View, Button, Text, TouchableOpacity, StyleSheet } from "react-native";
 import RBSheet from "react-native-raw-bottom-sheet";
 import { AntDesign } from "@expo/vector-icons";
+import CommentList from './commentList';
 
 export default function DescriptionModal({ title, description }) {
   const refRBSheet = useRef();
@@ -40,6 +41,8 @@ export default function DescriptionModal({ title, description }) {
             {description || "Video Description, Notes Text Here"}
           </Text>
         </View>
+        <CommentList/>
+
       </RBSheet>
     </TouchableOpacity>
   );

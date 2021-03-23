@@ -11,6 +11,8 @@ import {
   TouchableOpacity,
   SafeAreaView,
 } from "react-native";
+import InputComment from '../components/inputComment'
+import CommentList from '../components/commentList'
 import { Video, AVPlaybackStatus } from "expo-av";
 
 import Modal from "../components/modal";
@@ -92,14 +94,16 @@ function VideoCard({ title, img, onPress, style }) {
   );
 }
 
-export default function App({ navigation, id }) {
+export default function App({ navigation, route }) {
+  const { id, otherParam } = route.params;
+
   const video = React.useRef(null);
   const [status, setStatus] = React.useState({});
   const [index, setIndex] = useState(0);
   const [selectedId, setSelectedId] = useState("0");
 
   const renderVideoCard = ({ item }) => {
-    const backgroundColor = item.id === selectedId ? "#6e3b6e" : "white";
+    const backgroundColor = item.id === selectedId ? "#E6F7FF" : "white";
     return (
       <VideoCard
         title={item.name}
@@ -114,6 +118,7 @@ export default function App({ navigation, id }) {
           alignItems: "center",
           padding: 10,
           paddingRight: 80,
+          // boxShadow: '10px 0px 0px #1890FF',
         }}
       />
     );
@@ -150,15 +155,14 @@ export default function App({ navigation, id }) {
           }}
           useNativeControls
           resizeMode="contain"
-          // isLooping
           onPlaybackStatusUpdate={(status) => setStatus(() => status)}
-          // style={[{opacity:0.7}]}
         />
         <Modal />
       </View>
 
       <View style={styles.listContainer}>
-        <Text>dcd {i}</Text>
+        {/* <Text>dcd {id}</Text> */}
+        {/* <InputComment/> */}
         <FlatList
           data={playlist}
           renderItem={renderVideoCard}
@@ -172,7 +176,7 @@ export default function App({ navigation, id }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#ecf0f1",
+    backgroundColor: "rgba(18, 18, 29, 0.01)",
   },
   videoContainer: {
     flex: 0.41,
